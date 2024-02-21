@@ -148,7 +148,7 @@ public class ExtensionLoader<T> {
     }
 
     private ExtensionLoader(Class<?> type) {
-        this.type = type;
+        this.type = type;// getExtensionLoader 会是一个死循环，因为会不断调用；但是实际上在 getAdaptiveExtension 中会直接返回被 @Adaptive 注解的类，因此避免了死循环
         objectFactory = (type == ExtensionFactory.class ? null : ExtensionLoader.getExtensionLoader(ExtensionFactory.class).getAdaptiveExtension());
     }
 
