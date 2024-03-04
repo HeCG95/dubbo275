@@ -25,13 +25,16 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.demo.DemoService;
+import org.apache.dubbo.rpc.service.GenericService;
 
 public class ApiConsumerApplication {
     public static void main(String[] args) throws Exception {
         if (isClassic(args)) {
             runWithRefer();
         } else {
-            runWithBootstrap();
+//            runWithBootstrap();
+//            runWithSimpleConsumer();
+            runWithGenericConsumer();
         }
         Thread.sleep(10000000L);
     }
@@ -40,7 +43,43 @@ public class ApiConsumerApplication {
         return args.length > 0 && "classic".equalsIgnoreCase(args[0]);
     }
 
+    private static void runWithSimpleConsumer() throws IOException {
+        ReferenceConfig<DemoService> reference = new ReferenceConfig<>();
+        reference.setInterface(DemoService.class);
+        reference.setGeneric("false");
+
+        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+        bootstrap.application(new ApplicationConfig("dubbo-demo-api-consumer"))
+                .registry(new RegistryConfig("zookeeper://dev_local:2181"))
+                .reference(reference)
+                .start();
+
+        DemoService demoService = ReferenceConfigCache.getCache().get(reference);
+        String message = demoService.sayHello("dubbo");
+        System.out.println(message);
+    }
+
+    private static void runWithGenericConsumer() throws IOException {
+        ReferenceConfig<DemoService> reference = new ReferenceConfig<>();
+        reference.setInterface(DemoService.class);
+        reference.setGeneric("true");
+
+        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+        bootstrap.application(new ApplicationConfig("dubbo-demo-api-consumer"))
+                .registry(new RegistryConfig("zookeeper://dev_local:2181"))
+                .reference(reference)
+                .start();
+
+        DemoService demoService = ReferenceConfigCache.getCache().get(reference);
+
+        GenericService genericService = (GenericService) demoService;
+        Object message = genericService.$invoke("sayHello", new String[]{String.class.getName()},
+                new Object[]{"dubbo generic invoke"});
+        System.out.println(message);
+    }
+
     private static void runWithBootstrap() throws IOException {
+
         ReferenceConfig<DemoService> reference = new ReferenceConfig<>();
         reference.setInterface(DemoService.class);
         reference.setGeneric("false");
@@ -57,14 +96,10 @@ public class ApiConsumerApplication {
         dubbo.whenComplete((s, throwable) -> System.out.println(s));
         System.in.read();
 
-//        // generic invoke
-//        GenericService genericService = (GenericService) demoService;
-//        Object genericInvokeResult = genericService.$invoke("sayHello", new String[]{String.class.getName()},
-//                new Object[]{"dubbo generic invoke"});
-//        System.out.println(genericInvokeResult);
     }
 
     private static void runWithRefer() {
+
         ReferenceConfig<DemoService> reference = new ReferenceConfig<>();
         reference.setApplication(new ApplicationConfig("dubbo-demo-api-consumer"));
         reference.setRegistry(new RegistryConfig("zookeeper://dev_local:2181"));
@@ -72,5 +107,6 @@ public class ApiConsumerApplication {
         DemoService service = reference.get();
         String message = service.sayHello("dubbo");
         System.out.println(message);
+
     }
 }
