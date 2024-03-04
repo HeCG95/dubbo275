@@ -8,7 +8,7 @@ public class AdaptivePrint {
     public static void main(String[] args) {
 
         AdaptiveClassCodeGenerator generator =
-                new AdaptiveClassCodeGenerator(RegistryFactory.class, "protocol");
+                new AdaptiveClassCodeGenerator(RegistryFactory.class, "dubbo");
         System.out.println(generator.generate());
 
     }
