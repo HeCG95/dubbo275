@@ -13,6 +13,7 @@ public class ActivateDemo {
 
         ActivateDemo demo = new ActivateDemo();
 //        demo.testActivate();
+        demo.testRule();
 
         /*FilterImpl1 f1 = new FilterImpl1();
         FilterImpl2 f2 = new FilterImpl2();
@@ -29,6 +30,9 @@ public class ActivateDemo {
 
         Collections.sort(filters, ActivateComparator.COMPARATOR);*/
 
+    }
+
+    private void testRule(){
         URL url = URL.valueOf("test://localhost/test");
         url = url.addParameter(GROUP_KEY, "Provider");
 
@@ -36,11 +40,9 @@ public class ActivateDemo {
         // 通过"-"开头的配置明确指定不激活的扩展实现，直接就忽略
         List<ActivateI> list = getExtensionLoader(ActivateI.class)
                 .getActivateExtension(url, new String[]{
-                        "demoFilter3", "-demoFilter2", "default", "demoFilter1"},
+                                "demoFilter3", "-demoFilter2", "default", "demoFilter1"},
                         "Provider");
         System.out.println(">>>>> group size: "+list.size());
-
-
     }
 
     private void testActivate(){
