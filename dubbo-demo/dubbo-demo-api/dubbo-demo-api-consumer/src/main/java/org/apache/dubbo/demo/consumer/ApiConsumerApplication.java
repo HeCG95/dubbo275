@@ -25,9 +25,8 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.demo.DemoService;
-import org.apache.dubbo.rpc.service.GenericService;
 
-public class Application {
+public class ApiConsumerApplication {
     public static void main(String[] args) throws Exception {
         if (isClassic(args)) {
             runWithRefer();
