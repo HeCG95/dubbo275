@@ -32,9 +32,9 @@ public class ApiConsumerApplication {
         if (isClassic(args)) {
             runWithRefer();
         } else {
-//            runWithBootstrap();
+            runWithBootstrap();
 //            runWithSimpleConsumer();
-            runWithGenericConsumer();
+//            runWithGenericConsumer();
         }
         Thread.sleep(10000000L);
     }
