@@ -4,11 +4,15 @@ import org.apache.dubbo.common.URL;
 
 import java.util.List;
 
+import static org.apache.dubbo.common.constants.CommonConstants.GROUP_KEY;
 import static org.apache.dubbo.common.extension.ExtensionLoader.getExtensionLoader;
 
 public class ActivateDemo {
 
     public static void main(String[] args) {
+
+        ActivateDemo demo = new ActivateDemo();
+//        demo.testActivate();
 
         /*FilterImpl1 f1 = new FilterImpl1();
         FilterImpl2 f2 = new FilterImpl2();
@@ -26,12 +30,29 @@ public class ActivateDemo {
         Collections.sort(filters, ActivateComparator.COMPARATOR);*/
 
         URL url = URL.valueOf("test://localhost/test");
+        url = url.addParameter(GROUP_KEY, "Provider");
+
+        List<ActivateI> list = getExtensionLoader(ActivateI.class)
+                .getActivateExtension(url, new String[]{
+                        "demoFilter3", "-demoFilter2", "default", "demoFilter1"},
+                        "Provider");
+        System.out.println(">>>>> group size: "+list.size());
+
+
+    }
+
+    private void testActivate(){
+        URL url = URL.valueOf("test://localhost/test");
         List<ActivateI> list = getExtensionLoader(ActivateI.class)
                 .getActivateExtension(url, new String[]{}, "default_group");
         System.out.println(">>>>> size: "+list.size());
 
         System.out.println(">>>>> default name: "+getExtensionLoader(ActivateI.class).getDefaultExtensionName());
 
+        url = url.addParameter(GROUP_KEY, "group1");
+        list = getExtensionLoader(ActivateI.class)
+                .getActivateExtension(url, new String[]{}, "group1");
+        System.out.println(">>>>> group size: "+list.size());
     }
 
 }

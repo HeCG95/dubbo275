@@ -1,0 +1,7 @@
+groupmine=org.apache.dubbo.demo.provider.activate.impl.ActivateImpl2Group
+demoFilter1=org.apache.dubbo.demo.provider.activate.impl.DemoFIlter1
+demoFilter2=org.apache.dubbo.demo.provider.activate.impl.DemoFIlter2
+demoFilter3=org.apache.dubbo.demo.provider.activate.impl.DemoFIlter3
+demoFilter4=org.apache.dubbo.demo.provider.activate.impl.DemoFIlter4
+demoFilter5=org.apache.dubbo.demo.provider.activate.impl.DemoFIlter5
+demoFilter6=org.apache.dubbo.demo.provider.activate.impl.DemoFIlter6
