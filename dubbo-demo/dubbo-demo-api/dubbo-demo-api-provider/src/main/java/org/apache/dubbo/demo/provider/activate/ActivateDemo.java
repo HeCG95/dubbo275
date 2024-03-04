@@ -32,6 +32,8 @@ public class ActivateDemo {
         URL url = URL.valueOf("test://localhost/test");
         url = url.addParameter(GROUP_KEY, "Provider");
 
+        // 没有出现在values配置中的，即为默认激活的扩展实现
+        // 通过"-"开头的配置明确指定不激活的扩展实现，直接就忽略
         List<ActivateI> list = getExtensionLoader(ActivateI.class)
                 .getActivateExtension(url, new String[]{
                         "demoFilter3", "-demoFilter2", "default", "demoFilter1"},
