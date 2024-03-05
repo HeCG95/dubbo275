@@ -1,7 +1,11 @@
 package org.apache.dubbo.demo.provider.activate;
 
 import org.apache.dubbo.common.URL;
+import org.apache.dubbo.common.extension.support.ActivateComparator;
+import org.apache.dubbo.demo.provider.activate.impl.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.apache.dubbo.common.constants.CommonConstants.GROUP_KEY;
@@ -13,23 +17,27 @@ public class ActivateDemo {
 
         ActivateDemo demo = new ActivateDemo();
 //        demo.testActivate();
-        demo.testRule();
+//        demo.testRule();
+        demo.testOrder();
 
-        /*FilterImpl1 f1 = new FilterImpl1();
-        FilterImpl2 f2 = new FilterImpl2();
-        FilterImpl3 f3 = new FilterImpl3();
-        FilterImpl4 f4 = new FilterImpl4();
-        FilterImpl5 f5 = new FilterImpl5();
+    }
 
-        List<IFilter> filters = new ArrayList<>();
+    private void testOrder(){
+        DemoFIlter1 f1 = new DemoFIlter1();
+        DemoFIlter2 f2 = new DemoFIlter2();
+        DemoFIlter3 f3 = new DemoFIlter3();
+        DemoFIlter4 f4 = new DemoFIlter4();
+        DemoFIlter5 f5 = new DemoFIlter5();
+
+        List<ActivateI> filters = new ArrayList<>();
         filters.add(f1);
         filters.add(f2);
         filters.add(f3);
         filters.add(f4);
         filters.add(f5);
 
-        Collections.sort(filters, ActivateComparator.COMPARATOR);*/
-
+        Collections.sort(filters, ActivateComparator.COMPARATOR);
+        System.out.println(filters);
     }
 
     private void testRule(){
