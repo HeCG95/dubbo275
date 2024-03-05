@@ -49,23 +49,23 @@ public abstract class FailbackRegistry extends AbstractRegistry {
 
     /*  retry task map */
 
-    private final ConcurrentMap<URL, FailedRegisteredTask> failedRegistered = new ConcurrentHashMap<URL, FailedRegisteredTask>();
+    private final ConcurrentMap<URL, FailedRegisteredTask> failedRegistered = new ConcurrentHashMap<URL, FailedRegisteredTask>();// 注册失败的 URL 集合
 
-    private final ConcurrentMap<URL, FailedUnregisteredTask> failedUnregistered = new ConcurrentHashMap<URL, FailedUnregisteredTask>();
+    private final ConcurrentMap<URL, FailedUnregisteredTask> failedUnregistered = new ConcurrentHashMap<URL, FailedUnregisteredTask>();// 取消注册失败的 URL 集合
 
-    private final ConcurrentMap<Holder, FailedSubscribedTask> failedSubscribed = new ConcurrentHashMap<Holder, FailedSubscribedTask>();
+    private final ConcurrentMap<Holder, FailedSubscribedTask> failedSubscribed = new ConcurrentHashMap<Holder, FailedSubscribedTask>();// 订阅失败 URL 集合
 
-    private final ConcurrentMap<Holder, FailedUnsubscribedTask> failedUnsubscribed = new ConcurrentHashMap<Holder, FailedUnsubscribedTask>();
+    private final ConcurrentMap<Holder, FailedUnsubscribedTask> failedUnsubscribed = new ConcurrentHashMap<Holder, FailedUnsubscribedTask>();// 取消订阅失败的 URL 集合
 
-    private final ConcurrentMap<Holder, FailedNotifiedTask> failedNotified = new ConcurrentHashMap<Holder, FailedNotifiedTask>();
+    private final ConcurrentMap<Holder, FailedNotifiedTask> failedNotified = new ConcurrentHashMap<Holder, FailedNotifiedTask>();// 通知失败的 URL 集合
 
     /**
      * The time in milliseconds the retryExecutor will wait
      */
-    private final int retryPeriod;
+    private final int retryPeriod;// 重试操作的时间间隔
 
     // Timer for failure retry, regular check if there is a request for failure, and if there is, an unlimited retry
-    private final HashedWheelTimer retryTimer;
+    private final HashedWheelTimer retryTimer;// 用于定时执行失败重试操作的时间轮
 
     public FailbackRegistry(URL url) {
         super(url);
