@@ -1,8 +1,9 @@
 package org.apache.dubbo.demo.provider.generate;
 
 import org.apache.dubbo.common.extension.ExtensionLoader;
+import org.apache.dubbo.registry.RegistryFactory;
 
-public class RegistryFactory$Adaptive implements org.apache.dubbo.registry.RegistryFactory {
+public class RegistryFactory$Adaptive implements RegistryFactory {
     public org.apache.dubbo.registry.Registry getRegistry(org.apache.dubbo.common.URL arg0) {
 
         if (arg0 == null) throw new IllegalArgumentException("url == null");
@@ -14,7 +15,7 @@ public class RegistryFactory$Adaptive implements org.apache.dubbo.registry.Regis
         if (extName == null)
             throw new IllegalStateException("Failed to get extension ll(org.apache.dubbo.registry.RegistryFactory) name from url (" + url.toString() + ") use keys([protocol])");
 
-        org.apache.dubbo.registry.RegistryFactory extension = ExtensionLoader.getExtensionLoader(org.apache.dubbo.registry.RegistryFactory.class)
+        RegistryFactory extension = ExtensionLoader.getExtensionLoader(RegistryFactory.class)
                 .getExtension(extName);
         return extension.getRegistry(arg0);
     }
