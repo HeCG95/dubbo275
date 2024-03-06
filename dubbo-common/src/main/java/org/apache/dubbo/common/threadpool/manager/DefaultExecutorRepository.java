@@ -31,10 +31,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER_SIDE;
-import static org.apache.dubbo.common.constants.CommonConstants.EXECUTOR_SERVICE_COMPONENT_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.SIDE_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.THREADS_KEY;
+import static org.apache.dubbo.common.constants.CommonConstants.*;
 
 /**
  * Consider implementing {@code Licycle} to enable executors shutdown when the process stops.
@@ -164,7 +161,12 @@ public class DefaultExecutorRepository implements ExecutorRepository {
     }
 
     private ExecutorService createExecutor(URL url) {
-        return (ExecutorService) ExtensionLoader.getExtensionLoader(ThreadPool.class).getAdaptiveExtension().getExecutor(url);
+//        return (ExecutorService) ExtensionLoader.getExtensionLoader(ThreadPool.class).getAdaptiveExtension().getExecutor(url);
+
+        // 改变默认值
+        ThreadPool threadPool = ExtensionLoader.getExtensionLoader(ThreadPool.class).getAdaptiveExtension();
+//        url = url.addParameter(THREADPOOL_KEY, "cached");
+        return (ExecutorService) threadPool.getExecutor(url);
     }
 
 }
