@@ -18,7 +18,7 @@ package org.apache.dubbo.rpc;
 
 import org.apache.dubbo.common.extension.SPI;
 
-/**
+/** 监听服务发布事件以及取消暴露事件
  * ExporterListener. (SPI, Singleton, ThreadSafe)
  */
 @SPI
