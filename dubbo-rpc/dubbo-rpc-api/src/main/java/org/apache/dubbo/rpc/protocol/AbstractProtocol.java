@@ -46,15 +46,15 @@ public abstract class AbstractProtocol implements Protocol {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected final Map<String, Exporter<?>> exporterMap = new ConcurrentHashMap<String, Exporter<?>>();
+    protected final Map<String, Exporter<?>> exporterMap = new ConcurrentHashMap<String, Exporter<?>>();// 暴露出去的服务集合
 
     /**
      * <host:port, ProtocolServer>
      */
-    protected final Map<String, ProtocolServer> serverMap = new ConcurrentHashMap<>();
+    protected final Map<String, ProtocolServer> serverMap = new ConcurrentHashMap<>();// 全部的 ProtocolServer 实例
 
     //TODO SoftReference
-    protected final Set<Invoker<?>> invokers = new ConcurrentHashSet<Invoker<?>>();
+    protected final Set<Invoker<?>> invokers = new ConcurrentHashSet<Invoker<?>>();// 服务引用的集合
 
     protected static String serviceKey(URL url) {
         int port = url.getParameter(Constants.BIND_PORT_KEY, url.getPort());
