@@ -344,9 +344,9 @@ public class DubboProtocol extends AbstractProtocol {
                 .addParameterIfAbsent(CHANNEL_READONLYEVENT_SENT_KEY, Boolean.TRUE.toString())
                 // 心跳间隔
                 .addParameterIfAbsent(HEARTBEAT_KEY, String.valueOf(DEFAULT_HEARTBEAT))
-                .addParameter(CODEC_KEY, DubboCodec.NAME)
+                .addParameter(CODEC_KEY, DubboCodec.NAME)// Codec2扩展实现
                 .build();
-        // SERVER_KEY参数检查
+        // SERVER_KEY参数检查 网络层默认使用 Netty 4 实现
         String str = url.getParameter(SERVER_KEY, DEFAULT_REMOTING_SERVER);
 
         if (str != null && str.length() > 0 && !ExtensionLoader.getExtensionLoader(Transporter.class).hasExtension(str)) {
